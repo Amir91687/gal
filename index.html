@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>امیر گالری :)</title>
+  <style>
+    body {
+      background-color: #d1f0ff;
+      font-family: "B Nazanin", sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 30px 0 20px 0;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    #slider {
+      width: 100%;
+      border-radius: 50%;
+      transition: opacity 0.8s ease-in-out;
+      opacity: 1;
+      display: block;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+
+    .arrow:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 4px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>امیر گالری :)</h1>
+
+  <div class="slider-container">
+    <img id="slider" src="https://s6.uupload.ir/files/penguins_aasm.jpg" alt="اسلایدر تصویر">
+
+    <div class="arrow left" onclick="prevImage()">&#10094;</div>
+    <div class="arrow right" onclick="nextImage()">&#10095;</div>
+
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <script>
+    const images = [
+      "https://s6.uupload.ir/files/penguins_aasm.jpg",
+      "https://s6.uupload.ir/files/koala_wjt8.jpg",
+      "https://s6.uupload.ir/files/jellyfish_nn5w.jpg"
+    ];
+
+    let index = 0;
+    const slider = document.getElementById("slider");
+    const dotsContainer = document.getElementById("dots");
+    let intervalId;
+
+    function createDots() {
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < images.length; i++) {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.addEventListener("click", () => {
+          showImage(i);
+          restartSlider();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll(".dot");
+      dots.forEach(dot => dot.classList.remove("active"));
+      if (dots[index]) dots[index].classList.add("active");
+    }
+
+    function showImage(i) {
+      index = (i + images.length) % images.length;
+
+      // افکت فید (محو شدن)
+      slider.style.opacity = 0;
+      setTimeout(() => {
+        slider.src = images[index];
+        updateDots();
+        slider.style.opacity = 1;
+      }, 400); // نصف مدت ترنزیشن
+    }
+
+    function nextImage() {
+      showImage(index + 1);
+    }
+
+    function prevImage() {
+      showImage(index - 1);
+    }
+
+    function startSlider() {
+      intervalId = setInterval(nextImage, 3000);
+    }
+
+    function stopSlider() {
+      clearInterval(intervalId);
+    }
+
+    function restartSlider() {
+      stopSlider();
+      startSlider();
+    }
+
+    slider.addEventListener("mouseenter", stopSlider);
+    slider.addEventListener("mouseleave", startSlider);
+
+    createDots();
+    showImage(0);
+    startSlider();
+  </script>
+
+</body>
+</html>
