@@ -1,31 +1,49 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>امیرررر گالری :)</title>
+  <title>امیر گالری :)</title>
   <style>
     body {
       background-color: #d1f0ff;
       font-family: "B Nazanin", sans-serif;
-      text-align: center;
       margin: 0;
       padding: 0;
+      direction: rtl;
     }
 
-    h1 {
-      font-size: 36px;
-      margin: 30px 0 20px 0;
+    header {
+      background-color: #ffffffcc;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
     }
 
     .slider-container {
       position: relative;
       width: 400px;
-      margin: 0 auto;
+      margin: 30px auto;
     }
 
     #slider {
       width: 100%;
-      border-radius: 50%;
+      border-radius: 20%;
       transition: opacity 0.8s ease-in-out;
       opacity: 1;
       display: block;
@@ -47,16 +65,18 @@
     }
 
     .arrow.left {
-      left: 1px;
+      right: 100%;
+      margin-right: 5px;
     }
 
     .arrow.right {
-      right: 1px;
+      left: 100%;
+      margin-left: 5px;
     }
 
     .dots {
       position: absolute;
-      bottom: 12px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -75,92 +95,150 @@
     .dot.active {
       background-color: rgba(0, 0, 0, 0.5);
     }
+
+    .about {
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 20%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #f0f0f0;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>امیرر گالری :)</h1>
+<header>
+  <h1>امیر گالری :)</h1>
+  <nav>
+    <a href="#">خانه</a>
+    <a href="#">درباره ما</a>
+    <a href="#">تماس با ما</a>
+  </nav>
+</header>
 
-  <div class="slider-container">
-    <img id="slider" src="https://s6.uupload.ir/files/penguins_aasm.jpg" alt="اسلایدر تصویر">
+<div class="slider-container">
+  <img id="slider" src="https://s6.uupload.ir/files/penguins_aasm.jpg" alt="اسلایدر تصویر">
+  <div class="arrow left" onclick="prevImage()">&#10094;</div>
+  <div class="arrow right" onclick="nextImage()">&#10095;</div>
+  <div class="dots" id="dots"></div>
+</div>
 
-    <div class="arrow left" onclick="prevImage()">&#10094;</div>
-    <div class="arrow right" onclick="nextImage()">&#10095;</div>
+<section class="about">
+  <h2>درباره گالری</h2>
+  <p>
+    امیر گالری مجموعه‌ای از زیباترین تصاویر طبیعی و هنری است که با عشق گردآوری شده‌اند. هدف ما به اشتراک‌گذاری زیبایی‌ها با دیگران و الهام‌بخشی به علاقه‌مندان هنر و طبیعت است.
+  </p>
+</section>
 
-    <div class="dots" id="dots"></div>
-  </div>
+<section class="gallery">
+  <img src="https://s6.uupload.ir/files/penguins_aasm.jpg" alt="عکس ۱">
+  <img src="https://s6.uupload.ir/files/koala_wjt8.jpg" alt="عکس ۲">
+  <img src="https://s6.uupload.ir/files/jellyfish_nn5w.jpg" alt="عکس ۳">
+  <img src="https://s6.uupload.ir/files/penguins_aasm.jpg" alt="عکس ۴">
+  <img src="https://s6.uupload.ir/files/koala_wjt8.jpg" alt="عکس ۵">
+  <img src="https://s6.uupload.ir/files/jellyfish_nn5w.jpg" alt="عکس ۶">
+</section>
 
-  <script>
-    const images = [
-      "https://s6.uupload.ir/files/penguins_aasm.jpg",
-      "https://s6.uupload.ir/files/koala_wjt8.jpg",
-      "https://s6.uupload.ir/files/jellyfish_nn5w.jpg"
-    ];
+<footer>
+  تماس با ما: amir@example.com | تمامی حقوق محفوظ است © 2025
+</footer>
 
-    let index = 0;
-    const slider = document.getElementById("slider");
-    const dotsContainer = document.getElementById("dots");
-    let intervalId;
+<script>
+  const images = [
+    "https://s6.uupload.ir/files/penguins_aasm.jpg",
+    "https://s6.uupload.ir/files/koala_wjt8.jpg",
+    "https://s6.uupload.ir/files/jellyfish_nn5w.jpg"
+  ];
 
-    function createDots() {
-      dotsContainer.innerHTML = "";
-      for (let i = 0; i < images.length; i++) {
-        const dot = document.createElement("span");
-        dot.className = "dot";
-        dot.addEventListener("click", () => {
-          showImage(i);
-          restartSlider();
-        });
-        dotsContainer.appendChild(dot);
-      }
+  let index = 0;
+  const slider = document.getElementById("slider");
+  const dotsContainer = document.getElementById("dots");
+  let intervalId;
+
+  function createDots() {
+    dotsContainer.innerHTML = "";
+    for (let i = 0; i < images.length; i++) {
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.addEventListener("click", () => {
+        showImage(i);
+        restartSlider();
+      });
+      dotsContainer.appendChild(dot);
     }
+  }
 
-    function updateDots() {
-      const dots = document.querySelectorAll(".dot");
-      dots.forEach(dot => dot.classList.remove("active"));
-      if (dots[index]) dots[index].classList.add("active");
-    }
+  function updateDots() {
+    const dots = document.querySelectorAll(".dot");
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
+  }
 
-    function showImage(i) {
-      index = (i + images.length) % images.length;
+  function showImage(i) {
+    index = (i + images.length) % images.length;
+    slider.style.opacity = 0;
+    setTimeout(() => {
+      slider.src = images[index];
+      updateDots();
+      slider.style.opacity = 1;
+    }, 400);
+  }
 
-      // افکت فید (محو شدن)
-      slider.style.opacity = 0;
-      setTimeout(() => {
-        slider.src = images[index];
-        updateDots();
-        slider.style.opacity = 1;
-      }, 400); // نصف مدت ترنزیشن
-    }
+  function nextImage() {
+    showImage(index + 1);
+  }
 
-    function nextImage() {
-      showImage(index + 1);
-    }
+  function prevImage() {
+    showImage(index - 1);
+  }
 
-    function prevImage() {
-      showImage(index - 1);
-    }
+  function startSlider() {
+    intervalId = setInterval(nextImage, 3000);
+  }
 
-    function startSlider() {
-      intervalId = setInterval(nextImage, 8000);
-    }
+  function stopSlider() {
+    clearInterval(intervalId);
+  }
 
-    function stopSlider() {
-      clearInterval(intervalId);
-    }
-
-    function restartSlider() {
-      stopSlider();
-      startSlider();
-    }
-
-    slider.addEventListener("mouseenter", stopSlider);
-    slider.addEventListener("mouseleave", startSlider);
-
-    createDots();
-    showImage(0);
+  function restartSlider() {
+    stopSlider();
     startSlider();
-  </script>
+  }
+
+  slider.addEventListener("mouseenter", stopSlider);
+  slider.addEventListener("mouseleave", startSlider);
+
+  createDots();
+  showImage(0);
+  startSlider();
+</script>
 
 </body>
 </html>
